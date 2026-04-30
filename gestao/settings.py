@@ -6,7 +6,7 @@ SECRET_KEY = 'django-insecure-m3vagsl=%z4#=kloq0*wy(sw45e@_!wl$yk61^g*ukkpqzhdfr
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*', 'landmaker-rose.vercel.app', '.vercel.app']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -67,15 +67,13 @@ TIME_ZONE = 'America/Sao_Paulo'
 USE_I18N = True
 USE_TZ = True
 
-# ✅ CORRIGIDO: era 'static/img/' (errado)
 STATIC_URL = '/static/'
 
-# ✅ ADICIONADO: diz ao Django onde está sua pasta static/
+
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
-# ✅ ADICIONADO: pasta de destino do collectstatic (para produção)
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
