@@ -1,0 +1,437 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="dark" lang="pt-br">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sobre Nós — LandMaker</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#0da6f2",
+                    "bondi-blue": "#0095B6",
+                    "sky-blue": "#87CEEB",
+                    "background-dark": "#000000",
+                },
+                fontFamily: {
+                    "display": ["Space Grotesk", "sans-serif"]
+                },
+                borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                backgroundImage: {
+                    'blue-gradient': 'linear-gradient(135deg, #0095B6 0%, #87CEEB 100%)',
+                }
+            },
+        },
+    }
+</script>
+<style>
+    body {
+        font-family: 'Space Grotesk', sans-serif;
+        background-color: #000000;
+        overflow-x: hidden;
+    }
+
+    .glow-button {
+        box-shadow: 0 0 20px rgba(13, 166, 242, 0.4);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .glow-button:hover {
+        box-shadow: 0 0 35px rgba(13, 166, 242, 0.8);
+        transform: scale(1.05);
+    }
+
+    .glass-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.4s ease;
+    }
+    .glass-card:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(13, 166, 242, 0.3);
+        transform: translateY(-5px);
+    }
+
+    .gradient-text {
+        background: linear-gradient(135deg, #0095B6 0%, #87CEEB 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInScale {
+        from { opacity: 0; transform: scale(0.92); }
+        to   { opacity: 1; transform: scale(1); }
+    }
+
+    .animate-in {
+        animation: fadeInUp 0.8s ease-out forwards;
+        opacity: 0;
+    }
+    .delay-1 { animation-delay: 0.15s; }
+    .delay-2 { animation-delay: 0.30s; }
+    .delay-3 { animation-delay: 0.45s; }
+    .delay-4 { animation-delay: 0.60s; }
+
+    .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Avatar placeholder glow */
+    .avatar-glow {
+        box-shadow: 0 0 40px rgba(13, 166, 242, 0.25);
+        transition: box-shadow 0.4s ease;
+    }
+    .avatar-glow:hover {
+        box-shadow: 0 0 60px rgba(13, 166, 242, 0.5);
+    }
+
+    /* Timeline line */
+    .timeline-line {
+        background: linear-gradient(to bottom, transparent, #0da6f2, transparent);
+    }
+
+    /* Stat counter glow */
+    .stat-number {
+        background: linear-gradient(135deg, #0095B6 0%, #87CEEB 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+</style>
+</head>
+<body class="bg-background-dark text-slate-100 font-display selection:bg-primary/30">
+
+<!-- Header -->
+<header class="sticky top-0 z-50 w-full border-b border-white/10 bg-black/80 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <a class="flex items-center gap-3 group" href="/">
+            <img alt="LandMaker Logo" class="h-10 w-auto transition-transform duration-300 group-hover:scale-105" src="{% static 'img/logo.png' %}"/>
+        </a>
+        <nav class="hidden md:flex items-center gap-10">
+            <a class="text-sm font-medium text-slate-300 hover:text-sky-blue transition-colors" href="/#servicos">Serviços</a>
+            <a class="text-sm font-medium text-slate-300 hover:text-sky-blue transition-colors" href="/#portfolio">Portfólio</a>
+            <a class="text-sm font-medium text-slate-300 hover:text-sky-blue transition-colors" href="/#tecnologia">Tecnologia</a>
+            <a class="text-sm font-medium text-sky-blue border-b border-sky-blue/50" href="#">Sobre Nós</a>
+            <a class="text-sm font-medium text-slate-300 hover:text-sky-blue transition-colors" href="/#contato">Contato</a>
+        </nav>
+        <div class="flex items-center gap-4">
+            <button class="bg-blue-gradient text-white px-6 py-2 rounded-full text-sm font-bold glow-button">
+                Start Project
+            </button>
+        </div>
+    </div>
+</header>
+
+<main>
+
+    <!-- Hero Section -->
+    <section class="relative pt-24 pb-20 overflow-hidden">
+        <!-- Background glow -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none opacity-20">
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-primary/20 rounded-full blur-[120px]"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 relative text-center">
+            <p class="text-sky-blue text-sm font-bold uppercase tracking-widest mb-4 animate-in">Nossa História</p>
+            <h1 class="text-5xl md:text-7xl font-bold tracking-tight text-white mb-6 leading-tight animate-in delay-1">
+                Por trás da <span class="gradient-text">LandMaker</span>
+            </h1>
+            <p class="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed animate-in delay-2">
+                Dois desenvolvedores, uma visão: construir software que realmente transforma negócios. Conheça quem está por trás de cada linha de código.
+            </p>
+        </div>
+    </section>
+
+    <!-- Nossa História Section -->
+    <section class="py-20 bg-zinc-950">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="glass-card rounded-[2.5rem] p-10 md:p-16 reveal">
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="w-10 h-10 bg-blue-gradient rounded-xl flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-lg">auto_stories</span>
+                    </div>
+                    <h2 class="text-sky-blue text-sm font-bold uppercase tracking-widest">Como tudo começou</h2>
+                </div>
+
+                <h3 class="text-3xl md:text-4xl font-bold text-white mb-8 leading-snug">
+                    Uma ideia numa madrugada,<br/>
+                    <span class="gradient-text">um projeto que virou marca.</span>
+                </h3>
+
+                <div class="space-y-6 text-slate-400 text-lg leading-relaxed">
+                    <p>
+                        A LandMaker nasceu da frustração de dois desenvolvedores que, ao longo de anos trabalhando no mercado, perceberam que a maioria das empresas ainda sofria com sistemas lentos, interfaces confusas e soluções digitais que não acompanhavam a velocidade dos negócios.
+                    </p>
+                    <p>
+                        Em 2023, <span class="text-white font-semibold">Alex Ferreira</span> e <span class="text-white font-semibold">Lucas Mendes</span> decidiram unir suas habilidades — desenvolvimento full-stack e design de experiências — para criar algo diferente: uma empresa que entrega software de verdade, com atenção aos detalhes e foco total no resultado do cliente.
+                    </p>
+                    <p>
+                        O nome <span class="text-white font-semibold">LandMaker</span> veio da ideia de "marcar território" no digital — criar presença, impacto e performance em cada projeto entregue.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="py-20 bg-black">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-sky-blue text-sm font-bold uppercase tracking-widest mb-3">Trajetória</h2>
+                <h3 class="text-4xl font-bold text-white">Nossa linha do tempo</h3>
+            </div>
+
+            <div class="relative">
+                <!-- Vertical line -->
+                <div class="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px timeline-line hidden md:block"></div>
+
+                <div class="space-y-12">
+                    <!-- Item 1 -->
+                    <div class="flex flex-col md:flex-row items-center gap-6 reveal">
+                        <div class="md:w-1/2 md:text-right">
+                            <p class="text-sky-blue text-sm font-bold uppercase tracking-widest mb-1">2021</p>
+                            <h4 class="text-white text-xl font-bold mb-2">Primeiros passos</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed">Alex e Lucas se conhecem trabalhando em um projeto freelance. A sinergia foi imediata — código limpo, visão alinhada.</p>
+                        </div>
+                        <div class="w-10 h-10 bg-blue-gradient rounded-full flex items-center justify-center z-10 shrink-0 shadow-lg shadow-sky-blue/30">
+                            <span class="material-symbols-outlined text-white text-sm">handshake</span>
+                        </div>
+                        <div class="md:w-1/2"></div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="flex flex-col md:flex-row items-center gap-6 reveal">
+                        <div class="md:w-1/2"></div>
+                        <div class="w-10 h-10 bg-blue-gradient rounded-full flex items-center justify-center z-10 shrink-0 shadow-lg shadow-sky-blue/30">
+                            <span class="material-symbols-outlined text-white text-sm">lightbulb</span>
+                        </div>
+                        <div class="md:w-1/2">
+                            <p class="text-sky-blue text-sm font-bold uppercase tracking-widest mb-1">2022</p>
+                            <h4 class="text-white text-xl font-bold mb-2">A ideia toma forma</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed">Após entregar mais de 10 projetos juntos de forma informal, decidiram estruturar o trabalho como uma marca própria.</p>
+                        </div>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="flex flex-col md:flex-row items-center gap-6 reveal">
+                        <div class="md:w-1/2 md:text-right">
+                            <p class="text-sky-blue text-sm font-bold uppercase tracking-widest mb-1">2023</p>
+                            <h4 class="text-white text-xl font-bold mb-2">LandMaker é fundada</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed">A marca nasce oficialmente. Primeiro site, primeiros clientes, primeiro sistema entregue em produção.</p>
+                        </div>
+                        <div class="w-10 h-10 bg-blue-gradient rounded-full flex items-center justify-center z-10 shrink-0 shadow-lg shadow-sky-blue/30">
+                            <span class="material-symbols-outlined text-white text-sm">rocket_launch</span>
+                        </div>
+                        <div class="md:w-1/2"></div>
+                    </div>
+
+                    <!-- Item 4 -->
+                    <div class="flex flex-col md:flex-row items-center gap-6 reveal">
+                        <div class="md:w-1/2"></div>
+                        <div class="w-10 h-10 bg-blue-gradient rounded-full flex items-center justify-center z-10 shrink-0 shadow-lg shadow-sky-blue/30">
+                            <span class="material-symbols-outlined text-white text-sm">trending_up</span>
+                        </div>
+                        <div class="md:w-1/2">
+                            <p class="text-sky-blue text-sm font-bold uppercase tracking-widest mb-1">Hoje</p>
+                            <h4 class="text-white text-xl font-bold mb-2">Crescendo com propósito</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed">Projetos entregues para clientes em múltiplos setores. A missão continua: software que transforma.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="py-20 bg-zinc-950">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-sky-blue text-sm font-bold uppercase tracking-widest mb-3">Time</h2>
+                <h3 class="text-4xl font-bold text-white">Quem somos nós</h3>
+                <div class="w-20 h-1 bg-blue-gradient mt-6 mx-auto"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+
+                <!-- Pessoa 1 -->
+                <div class="glass-card p-10 rounded-3xl text-center reveal group">
+                    <div class="avatar-glow w-28 h-28 rounded-full bg-blue-gradient/20 border-2 border-sky-blue/30 flex items-center justify-center mx-auto mb-6 group-hover:border-sky-blue/70 transition-all">
+                        <span class="material-symbols-outlined text-sky-blue text-5xl">person</span>
+                    </div>
+                    <h4 class="text-2xl font-bold text-white mb-1">Alex Ferreira</h4>
+                    <p class="text-sky-blue text-sm font-semibold uppercase tracking-widest mb-4">Full-Stack Developer</p>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                        Especialista em arquitetura de sistemas e desenvolvimento back-end. Apaixonado por código limpo, performance e soluções que escalam sem dor.
+                    </p>
+                    <div class="flex flex-wrap gap-2 justify-center mb-6">
+                        <span class="text-[10px] px-3 py-1 bg-white/5 rounded-full text-sky-blue border border-sky-blue/20">Python</span>
+                        <span class="text-[10px] px-3 py-1 bg-white/5 rounded-full text-sky-blue border border-sky-blue/20">Django</span>
+                        <span class="text-[10px] px-3 py-1 bg-white/5 rounded-full text-sky-blue border border-sky-blue/20">React</span>
+                        <span class="text-[10px] px-3 py-1 bg-white/5 rounded-full text-sky-blue border border-sky-blue/20">AWS</span>
+                    </div>
+                    <div class="flex justify-center gap-3">
+                        <a href="#" class="w-9 h-9 rounded-full glass-card flex items-center justify-center hover:bg-sky-blue hover:text-white transition-all text-slate-400">
+                            <i class="fa-brands fa-linkedin-in text-xs"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-full glass-card flex items-center justify-center hover:bg-sky-blue hover:text-white transition-all text-slate-400">
+                            <i class="fa-brands fa-github text-xs"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-full glass-card flex items-center justify-center hover:bg-sky-blue hover:text-white transition-all text-slate-400">
+                            <i class="fa-brands fa-instagram text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Pessoa 2 -->
+                <div class="glass-card p-10 rounded-3xl text-center reveal delay-1 group">
+                    <div class="avatar-glow w-28 h-28 rounded-full bg-blue-gradient/20 border-2 border-sky-blue/30 flex items-center justify-center mx-auto mb-6 group-hover:border-sky-blue/70 transition-all">
+                        <span class="material-symbols-outlined text-sky-blue text-5xl">person</span>
+                    </div>
+                    <h4 class="text-2xl font-bold text-white mb-1">Lucas Mendes</h4>
+                    <p class="text-sky-blue text-sm font-semibold uppercase tracking-widest mb-4">Designer & UI/UX</p>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                        Responsável por transformar ideias complexas em interfaces simples e bonitas. Acredita que a melhor experiência é aquela que o usuário nem percebe que existe.
+                    </p>
+                    <div class="flex flex-wrap gap-2 justify-center mb-6">
+                        <span class="text-[10px] px-3 py-1 bg-white/5 rounded-full text-sky-blue border border-sky-blue/20">Figma</span>
+                        <span class="text-[10px] px-3 py-1 bg-white/5 rounded-full text-sky-blue border border-sky-blue/20">Tailwind</span>
+                        <span class="text-[10px] px-3 py-1 bg-white/5 rounded-full text-sky-blue border border-sky-blue/20">Next.js</span>
+                        <span class="text-[10px] px-3 py-1 bg-white/5 rounded-full text-sky-blue border border-sky-blue/20">Motion</span>
+                    </div>
+                    <div class="flex justify-center gap-3">
+                        <a href="#" class="w-9 h-9 rounded-full glass-card flex items-center justify-center hover:bg-sky-blue hover:text-white transition-all text-slate-400">
+                            <i class="fa-brands fa-linkedin-in text-xs"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-full glass-card flex items-center justify-center hover:bg-sky-blue hover:text-white transition-all text-slate-400">
+                            <i class="fa-brands fa-github text-xs"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-full glass-card flex items-center justify-center hover:bg-sky-blue hover:text-white transition-all text-slate-400">
+                            <i class="fa-brands fa-instagram text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-20 bg-black">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="glass-card rounded-[2.5rem] p-12 reveal">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
+                    <div>
+                        <p class="text-4xl font-bold stat-number mb-2">+30</p>
+                        <p class="text-slate-500 text-xs uppercase tracking-widest">Projetos Entregues</p>
+                    </div>
+                    <div>
+                        <p class="text-4xl font-bold stat-number mb-2">2</p>
+                        <p class="text-slate-500 text-xs uppercase tracking-widest">Anos de Mercado</p>
+                    </div>
+                    <div>
+                        <p class="text-4xl font-bold stat-number mb-2">99%</p>
+                        <p class="text-slate-500 text-xs uppercase tracking-widest">Satisfação</p>
+                    </div>
+                    <div>
+                        <p class="text-4xl font-bold stat-number mb-2">∞</p>
+                        <p class="text-slate-500 text-xs uppercase tracking-widest">Café Consumido</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-24">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="bg-blue-gradient/10 border border-sky-blue/20 rounded-[3rem] p-12 md:p-20 reveal">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Vamos construir algo juntos?</h2>
+                <p class="text-slate-400 text-lg mb-12 max-w-xl mx-auto">
+                    Agora que você nos conhece, que tal dar o próximo passo? Fale com a gente.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="/#contato" class="bg-blue-gradient text-white px-12 py-5 rounded-2xl text-lg font-bold glow-button">
+                        Falar com a gente
+                    </a>
+                    <a href="/" class="glass-card text-white px-12 py-5 rounded-2xl text-lg font-bold hover:bg-white/10 transition-colors">
+                        Ver Portfólio
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="bg-black border-t border-white/10 pt-20 pb-10">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid md:grid-cols-4 gap-12 mb-16">
+            <div class="col-span-1 md:col-span-2">
+                <div class="flex items-center gap-3 mb-8">
+                    <img alt="LandMaker Logo" class="h-12 w-auto" src="{% static 'img/logo.png' %}"/>
+                </div>
+                <p class="text-slate-400 max-w-sm leading-relaxed">
+                    Especialistas em desenvolvimento de software e análise de dados. Criando sistemas escaláveis que movem o mercado.
+                </p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-6">Empresa</h4>
+                <ul class="space-y-4">
+                    <li><a class="text-sky-blue font-semibold" href="#">Sobre Nós</a></li>
+                    <li><a class="text-slate-400 hover:text-sky-blue transition-colors" href="/#servicos">Serviços</a></li>
+                    <li><a class="text-slate-400 hover:text-sky-blue transition-colors" href="/#portfolio">Portfólio</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-6">Social</h4>
+                <div class="flex gap-4">
+                    <a class="w-10 h-10 rounded-full glass-card flex items-center justify-center hover:bg-sky-blue hover:text-white transition-all" href="#">
+                        <i class="fa-brands fa-instagram text-sm"></i>
+                    </a>
+                    <a class="w-10 h-10 rounded-full glass-card flex items-center justify-center hover:bg-sky-blue hover:text-white transition-all" href="#">
+                        <i class="fa-brands fa-linkedin-in text-sm"></i>
+                    </a>
+                    <a class="w-10 h-10 rounded-full glass-card flex items-center justify-center hover:bg-sky-blue hover:text-white transition-all" href="#">
+                        <i class="fa-brands fa-github text-sm"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-white/5 pt-10 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-slate-500 text-sm">© 2024 LandMaker Software Engineering. Todos os direitos reservados.</p>
+            <div class="flex gap-8 text-sm text-slate-500">
+                <a class="hover:text-white transition-colors" href="#">Privacidade</a>
+                <a class="hover:text-white transition-colors" href="#">Termos</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('active');
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+</script>
+</body>
+</html>

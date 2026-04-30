@@ -1,0 +1,525 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-br"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link rel="icon" type="image/png" href="{% static 'img/logo.png' %}"/>
+<link rel="apple-touch-icon" href="{% static 'img/logo.png' %}"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0da6f2",
+                        "bondi-blue": "#0095B6",
+                        "sky-blue": "#87CEEB",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#000000",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                    backgroundImage: {
+                        'blue-gradient': 'linear-gradient(135deg, #0095B6 0%, #87CEEB 100%)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: #000000;
+            overflow-x: hidden;
+        }
+        .glow-button {
+            box-shadow: 0 0 20px rgba(13, 166, 242, 0.4);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .glow-button:hover {
+            box-shadow: 0 0 35px rgba(13, 166, 242, 0.8);
+            transform: scale(1.05);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+        }
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(13, 166, 242, 0.3);
+            transform: translateY(-5px);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #0095B6 0%, #87CEEB 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        .animate-hero-img {
+            animation: fadeInScale 1.2s ease-out forwards, float 6s ease-in-out infinite 1.2s;
+            opacity: 0;
+        }
+
+        .animate-hero-text {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-background-dark text-slate-100 font-display selection:bg-primary/30">
+<!-- Header -->
+<header class="sticky top-0 z-50 w-full border-b border-white/10 bg-black/80 backdrop-blur-md">
+<div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+<a class="flex items-center gap-3 group" href="#">
+<img alt="LandMaker Logo" class="h-10 w-auto transition-transform duration-300 group-hover:scale-105" src="{% static 'img/logo.png' %}"/>
+</a>
+<nav class="hidden md:flex items-center gap-10">
+<a class="text-sm font-medium text-slate-300 hover:text-sky-blue transition-colors" href="#servicos">Serviços</a>
+<a class="text-sm font-medium text-slate-300 hover:text-sky-blue transition-colors" href="#portfolio">Portfólio</a>
+<a class="text-sm font-medium text-slate-300 hover:text-sky-blue transition-colors" href="#tecnologia">Tecnologia</a>
+<a class="text-sm font-medium text-slate-300 hover:text-sky-blue transition-colors" href="#contato">Contato</a>
+{#<a class="text-slate-400 hover:text-sky-blue transition-colors" href="{% url 'sobre' %}">Sobre Nós</a>#}
+</nav>
+<div class="flex items-center gap-4">
+    <a href="https://wa.me/5518991288116?text=Ol%C3%A1%2C%20eu%20gostaria%20de%20saber%20mais%20sobre%20os%20servi%C3%A7os%20da%20LandMaker%20!" 
+       target="_blank">
+        <button class="bg-blue-gradient text-white px-6 py-2 rounded-full text-sm font-bold glow-button">
+            Solicitar Serviços
+        </button>
+    </a>
+</div>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="relative pt-20 pb-32 overflow-hidden">
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none opacity-20">
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-primary/20 rounded-full blur-[120px]"></div>
+</div>
+<div class="max-w-7xl mx-auto px-6 relative flex flex-col items-center text-center">
+<div class="mb-12 w-full max-w-2xl animate-hero-img">
+<img alt="LandMaker Software Development"
+     class="w-full h-auto drop-shadow-[0_0_30px_rgba(13,166,242,0.2)] rounded-3xl object-contain bg-black/20"
+     src="{% static 'img/land-maker.png' %}"/>
+</div>
+<h1 class="text-5xl md:text-7xl font-bold tracking-tight text-white mb-6 leading-tight animate-hero-text delay-1">
+                Construindo o Futuro do <br/><span class="gradient-text">Software</span>
+</h1>
+<p class="text-slate-400 text-lg md:text-xl max-w-2xl mb-10 leading-relaxed animate-hero-text delay-2">
+                Soluções digitais de alta performance. Da análise de dados ao desenvolvimento de sistemas SaaS, entregamos engenharia de software com precisão e escala.
+            </p>
+<div class="flex flex-col sm:flex-row gap-4 animate-hero-text delay-3">
+<a class="bg-blue-gradient text-white px-10 py-4 rounded-xl text-lg font-bold glow-button flex items-center justify-center gap-2" href="#contato">
+                    Começar Projeto <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+<a class="glass-card text-white px-10 py-4 rounded-xl text-lg font-bold hover:bg-white/10 transition-colors flex items-center justify-center" href="#portfolio">
+                    Ver Projetos
+                </a>
+</div>
+</div>
+</section>
+<!-- Services Section -->
+<section class="py-24 bg-zinc-950" id="servicos">
+<div class="max-w-7xl mx-auto px-6">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6 reveal">
+<div>
+<h2 class="text-sky-blue text-sm font-bold uppercase tracking-widest mb-3">Expertise</h2>
+<h3 class="text-4xl font-bold text-white">Nossas Soluções</h3>
+</div>
+<p class="text-slate-400 max-w-md">
+                    Foco exclusivo em excelência de software, unindo metodologias ágeis a arquiteturas modernas para impulsionar seu negócio.
+                </p>
+</div>
+<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Landing Pages -->
+<div class="glass-card p-8 rounded-3xl group hover:border-sky-blue/50 transition-all duration-500 reveal flex flex-col">
+<div class="w-14 h-14 bg-blue-gradient rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-sky-blue/20 transition-transform duration-500 group-hover:scale-110">
+<span class="material-symbols-outlined text-white text-2xl">web</span>
+</div>
+<h4 class="text-xl font-bold text-white mb-3">Landing Pages</h4>
+<p class="text-slate-400 text-sm leading-relaxed mb-6">
+                        Páginas de alta conversão com design premium e performance otimizada para SEO.
+                    </p>
+<ul class="space-y-2 mb-6">
+<li class="flex items-center gap-2 text-xs text-slate-300"><span class="material-symbols-outlined text-sky-blue text-[14px]">check_circle</span> Responsive Design</li>
+<li class="flex items-center gap-2 text-xs text-slate-300"><span class="material-symbols-outlined text-sky-blue text-[14px]">check_circle</span> High Conversion</li>
+</ul>
+<div class="mt-auto pt-4 border-t border-white/10">
+  <a href="https://wa.me/5518991288116?text=Olá%2C%20gostaria%20de%20solicitar%20um%20orçamento%20para%20Landing%20Page." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs text-sky-blue/70 hover:text-sky-blue transition-colors duration-200">
+    <svg class="w-3 h-3 fill-current flex-shrink-0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Solicitar orçamento
+  </a>
+</div>
+</div>
+<!-- SaaS Systems -->
+<div class="glass-card p-8 rounded-3xl group hover:border-sky-blue/50 transition-all duration-500 reveal delay-1 flex flex-col">
+<div class="w-14 h-14 bg-blue-gradient rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-sky-blue/20 transition-transform duration-500 group-hover:scale-110">
+<span class="material-symbols-outlined text-white text-2xl">cloud_done</span>
+</div>
+<h4 class="text-xl font-bold text-white mb-3">Sistema de MicroSaas</h4>
+<p class="text-slate-400 text-sm leading-relaxed mb-6">
+                        Desenvolvimento de plataformas escaláveis com arquitetura multi-tenant e segurança robusta.
+                    </p>
+<ul class="space-y-2 mb-6">
+<li class="flex items-center gap-2 text-xs text-slate-300"><span class="material-symbols-outlined text-sky-blue text-[14px]">check_circle</span> Scalable Arch</li>
+<li class="flex items-center gap-2 text-xs text-slate-300"><span class="material-symbols-outlined text-sky-blue text-[14px]">check_circle</span> Multi-tenancy</li>
+</ul>
+<div class="mt-auto pt-4 border-t border-white/10">
+  <a href="https://wa.me/5518991288116?text=Olá%2C%20gostaria%20de%20solicitar%20um%20orçamento%20para%20Sistema%20MicroSaaS." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs text-sky-blue/70 hover:text-sky-blue transition-colors duration-200">
+    <svg class="w-3 h-3 fill-current flex-shrink-0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Solicitar orçamento
+  </a>
+</div>
+</div>
+<!-- Designer | UI/UX -->
+<div class="glass-card p-8 rounded-3xl group hover:border-sky-blue/50 transition-all duration-500 reveal delay-2 flex flex-col">
+<div class="w-14 h-14 bg-blue-gradient rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-sky-blue/20 transition-transform duration-500 group-hover:scale-110">
+<span class="material-symbols-outlined text-white text-2xl">terminal</span>
+</div>
+<h4 class="text-xl font-bold text-white mb-3">Designer | UI/UX Design</h4>
+<p class="text-slate-400 text-sm leading-relaxed mb-6">
+    Criação de interfaces intuitivas e experiências digitais centradas no usuário, unindo estética e funcionalidade.
+</p>
+<ul class="space-y-2 mb-6">
+<li class="flex items-center gap-2 text-xs text-slate-300"><span class="material-symbols-outlined text-sky-blue text-[14px]">check_circle</span> Wireframes & Protótipos</li>
+<li class="flex items-center gap-2 text-xs text-slate-300"><span class="material-symbols-outlined text-sky-blue text-[14px]">check_circle</span> Design Systems</li>
+</ul>
+<div class="mt-auto pt-4 border-t border-white/10">
+  <a href="https://wa.me/5518991288116?text=Olá%2C%20gostaria%20de%20solicitar%20um%20orçamento%20para%20UI%2FUX%20Design." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs text-sky-blue/70 hover:text-sky-blue transition-colors duration-200">
+    <svg class="w-3 h-3 fill-current flex-shrink-0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Solicitar orçamento
+  </a>
+</div>
+</div>
+<!-- Data Analysis -->
+<div class="glass-card p-8 rounded-3xl group hover:border-sky-blue/50 transition-all duration-500 reveal delay-3 flex flex-col">
+<div class="w-14 h-14 bg-blue-gradient rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-sky-blue/20 transition-transform duration-500 group-hover:scale-110">
+<span class="material-symbols-outlined text-white text-2xl">leaderboard</span>
+</div>
+<h4 class="text-xl font-bold text-white mb-3">Análise de Dados &amp; BI</h4>
+<p class="text-slate-400 text-sm leading-relaxed mb-6">
+                        Transformação de dados brutos em insights estratégicos através de dashboards inteligentes.
+                    </p>
+<ul class="space-y-2 mb-6">
+<li class="flex items-center gap-2 text-xs text-slate-300"><span class="material-symbols-outlined text-sky-blue text-[14px]">check_circle</span> BI Dashboards</li>
+<li class="flex items-center gap-2 text-xs text-slate-300"><span class="material-symbols-outlined text-sky-blue text-[14px]">check_circle</span> Predictive Analytics</li>
+</ul>
+<div class="mt-auto pt-4 border-t border-white/10">
+  <a href="https://wa.me/5518991288116?text=Olá%2C%20gostaria%20de%20solicitar%20um%20orçamento%20para%20Análise%20de%20Dados%20%26%20BI." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs text-sky-blue/70 hover:text-sky-blue transition-colors duration-200">
+    <svg class="w-3 h-3 fill-current flex-shrink-0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Solicitar orçamento
+  </a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Software Projects Section -->
+<section class="py-24 bg-black" id="portfolio">
+<div class="max-w-7xl mx-auto px-6">
+<div class="mb-16 reveal">
+<h2 class="text-sky-blue text-sm font-bold uppercase tracking-widest mb-3">Cases</h2>
+<h3 class="text-4xl font-bold text-white">Projetos em Destaque</h3>
+<div class="w-20 h-1 bg-blue-gradient mt-6"></div>
+</div>
+<div class="grid md:grid-cols-3 gap-8">
+<!-- Project 1 -->
+<div class="glass-card rounded-2xl overflow-hidden reveal group">
+<div class="h-48 overflow-hidden relative">
+<img alt="Landing Page Premium" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="{% static 'img/mec.png' %}"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<button class="bg-white/20 backdrop-blur-md text-white p-3 rounded-full hover:bg-white/30 transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+<div class="p-6">
+<h4 class="text-xl font-bold text-white mb-2">Mecanica - Landing Page</h4>
+<p class="text-slate-400 text-sm mb-4">Design moderno e focado em design e pagamentos digitais.</p>
+<div class="flex gap-2">
+<span class="text-[10px] px-2 py-1 bg-white/5 rounded text-sky-blue border border-sky-blue/20">JavaScript</span>
+<span class="text-[10px] px-2 py-1 bg-white/5 rounded text-sky-blue border border-sky-blue/20">Tailwind</span>
+</div>
+</div>
+</div>
+<!-- Project 2 -->
+<div class="glass-card rounded-2xl overflow-hidden reveal delay-1 group">
+<div class="h-48 overflow-hidden relative">
+<img alt="SaaS Dashboard" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="{% static 'img/doceHome.png' %}"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<button class="bg-white/20 backdrop-blur-md text-white p-3 rounded-full hover:bg-white/30 transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+<div class="p-6">
+<h4 class="text-xl font-bold text-white mb-2">Venda de Doces - MicroSaaS</h4>
+<p class="text-slate-400 text-sm mb-4">Sistema de gestão em nuvem com alto desempenho e preços acessíveis.</p>
+<div class="flex gap-2">
+<span class="text-[10px] px-2 py-1 bg-white/5 rounded text-sky-blue border border-sky-blue/20">Node.js</span>
+<span class="text-[10px] px-2 py-1 bg-white/5 rounded text-sky-blue border border-sky-blue/20">AWS</span>
+<span class="text-[10px] px-2 py-1 bg-white/5 rounded text-sky-blue border border-sky-blue/20">TypeScript</span>
+<span class="text-[10px] px-2 py-1 bg-white/5 rounded text-sky-blue border border-sky-blue/20">BD</span>
+</div>
+</div>
+</div>
+<!-- Project 3 -->
+<div class="glass-card rounded-2xl overflow-hidden reveal delay-1 group">
+<div class="h-48 overflow-hidden relative">
+<img alt="SaaS Dashboard" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="{% static 'img/pedeFacil.png' %}"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<button class="bg-white/20 backdrop-blur-md text-white p-3 rounded-full hover:bg-white/30 transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+<div class="p-6">
+<h4 class="text-xl font-bold text-white mb-2">Pede Fácil - Delivery </h4>
+<p class="text-slate-400 text-sm mb-4">Sistema de Delivery online com foco em eficiência e experiência do usuário.</p>
+<div class="flex gap-2">
+<span class="text-[10px] px-2 py-1 bg-white/5 rounded text-sky-blue border border-sky-blue/20">React.Js</span>
+<span class="text-[10px] px-2 py-1 bg-white/5 rounded text-sky-blue border border-sky-blue/20">JavaScript</span>
+<span class="text-[10px] px-2 py-1 bg-white/5 rounded text-sky-blue border border-sky-blue/20">TypeScript</span>
+<span class="text-[10px] px-2 py-1 bg-white/5 rounded text-sky-blue border border-sky-blue/20">Banco de Dados</span>
+</div>
+</div>
+</div>
+<!-- Project 4 -->
+<div class="glass-card rounded-2xl overflow-hidden reveal delay-1 group">
+<div class="h-48 overflow-hidden relative">
+<img alt="SaaS Dashboard" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="{% static 'img/psico.png' %}"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<button class="bg-white/20 backdrop-blur-md text-white p-3 rounded-full hover:bg-white/30 transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+<div class="p-6">
+<h4 class="text-xl font-bold text-white mb-2">Clínica de Psicologia - Site Completo</h4>
+<p class="text-slate-400 text-sm mb-4">Site completo para clínica de psicologia, com foco em design e melhor atendimento.</p>
+<div class="flex gap-2">
+<span class="text-[10px] px-2 py-1 bg-white/5 rounded text-sky-blue border border-sky-blue/20">Node.js</span>
+<span class="text-[10px] px-2 py-1 bg-white/5 rounded text-sky-blue border border-sky-blue/20">React</span>
+</div>
+</div>
+</div>
+<!-- Project 5 -->
+<div class="glass-card rounded-2xl overflow-hidden reveal delay-1 group">
+<div class="h-48 overflow-hidden relative">
+<img alt="SaaS Dashboard" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="{% static 'img/Bi.png' %}"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<button class="bg-white/20 backdrop-blur-md text-white p-3 rounded-full hover:bg-white/30 transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+<div class="p-6">
+<h4 class="text-xl font-bold text-white mb-2">Análise de Dados &amp; BI</h4>
+<p class="text-slate-400 text-sm mb-4">Sistema de análise de dados com foco em insights e tomada de decisão.</p>
+<div class="flex gap-2">
+<span class="text-[10px] px-2 py-1 bg-white/5 rounded text-sky-blue border border-sky-blue/20">BI</span>
+<span class="text-[10px] px-2 py-1 bg-white/5 rounded text-sky-blue border border-sky-blue/20">Excel</span>
+</div>
+</div>
+</div>
+<!-- Project 6 -->
+<div class="glass-card rounded-2xl overflow-hidden reveal delay-2 group">
+<div class="h-48 overflow-hidden relative">
+<img alt="BI Analysis" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="{% static 'img/design.png' %}"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<button class="bg-white/20 backdrop-blur-md text-white p-3 rounded-full hover:bg-white/30 transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+<div class="p-6">
+<h4 class="text-xl font-bold text-white mb-2">UX/UI Design</h4>
+<p class="text-slate-400 text-sm mb-4">Visualização da sua marca visando valores para melhoria da experiência do usuário.</p>
+<div class="flex gap-2">
+<span class="text-[10px] px-2 py-1 bg-white/5 rounded text-sky-blue border border-sky-blue/20">Figma</span>
+<span class="text-[10px] px-2 py-1 bg-white/5 rounded text-sky-blue border border-sky-blue/20">Storybook</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Technical Depth Section -->
+<section class="py-24 relative" id="tecnologia">
+<div class="max-w-7xl mx-auto px-6">
+<div class="glass-card overflow-hidden rounded-[2.5rem] border-white/5 relative reveal">
+<div class="grid lg:grid-cols-2 items-center">
+<div class="p-12 lg:p-20">
+<h3 class="text-3xl md:text-4xl font-bold text-white mb-6">Software Depth for Modern Challenges</h3>
+<p class="text-slate-400 text-lg mb-8 leading-relaxed">
+                            Nossa stack tecnológica é focada em performance e manutenibilidade. Dominamos frameworks e arquiteturas que garantem o sucesso de sistemas críticos e análise de dados massivos.
+                        </p>
+<div class="flex items-center gap-6">
+<div class="text-center">
+<p class="text-3xl font-bold text-white">99.9%</p>
+<p class="text-slate-500 text-xs uppercase tracking-widest mt-1">Uptime</p>
+</div>
+<div class="w-px h-12 bg-white/10"></div>
+<div class="text-center">
+<p class="text-3xl font-bold text-white">0ms</p>
+<p class="text-slate-500 text-xs uppercase tracking-widest mt-1">Bugs Críticos</p>
+</div>
+</div>
+</div>
+<div class="relative h-full min-h-[400px] lg:min-h-full overflow-hidden bg-black/40">
+<div class="absolute inset-0 flex items-center justify-center p-8">
+<div class="w-full h-full rounded-xl border border-white/10 overflow-hidden shadow-2xl relative transition-transform duration-700 hover:scale-[1.02]">
+<div class="absolute top-0 w-full h-8 bg-zinc-900 flex items-center px-4 gap-1.5 border-b border-white/5 z-10">
+<div class="w-2.5 h-2.5 rounded-full bg-red-500/50"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-amber-500/50"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-emerald-500/50"></div>
+</div>
+<img alt="Tech depth code visualization" class="w-full h-full object-contain p-8 bg-black/40" src="{% static 'img/code.jpg' %}"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-24" id="contato">
+<div class="max-w-4xl mx-auto px-6 text-center">
+<div class="bg-blue-gradient/10 border border-sky-blue/20 rounded-[3rem] p-12 md:p-20 reveal">
+<h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Pronto para digitalizar sua visão?</h2>
+<p class="text-slate-400 text-lg mb-12 max-w-xl mx-auto">
+                    Desenvolva sistemas de alto impacto com quem entende de engenharia de software e análise de dados.
+                </p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+ <a href="https://wa.me/5518991288116?text=Ol%C3%A1%2C%20eu%20gostaria%20de%20saber%20mais%20sobre%20os%20servi%C3%A7os%20da%20LandMaker%20!" 
+       target="_blank">
+        <button class="bg-blue-gradient text-white px-12 py-5 rounded-2xl text-lg font-bold glow-button">
+            Solicitar Orçamento
+        </button>
+    </a>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-black border-t border-white/10 pt-20 pb-10">
+<div class="max-w-7xl mx-auto px-6">
+<div class="grid md:grid-cols-4 gap-12 mb-16">
+<div class="col-span-1 md:col-span-2">
+<div class="flex items-center gap-3 mb-8">
+<img alt="LandMaker Logo" class="h-12 w-auto" src="{% static 'img/logo.png' %}"/>
+</div>
+<p class="text-slate-400 max-w-sm leading-relaxed">
+                    Especialistas em desenvolvimento de software e análise de dados. Criando sistemas escaláveis que movem o mercado.
+                </p>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6">Empresa</h4>
+<ul class="space-y-4">
+<li><a class="text-slate-400 hover:text-sky-blue transition-colors" href="{% url 'sobre' %}">Sobre Nós</a></li>
+<li><a class="text-slate-400 hover:text-sky-blue transition-colors" href="#">Serviços</a></li>
+<li><a class="text-slate-400 hover:text-sky-blue transition-colors" href="#">Portfólio</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6">Social</h4>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<div class="flex gap-4">
+    <a class="w-10 h-10 rounded-full glass-card flex items-center justify-center hover:bg-sky-blue hover:text-white transition-all" href="https://www.instagram.com/landmakerr/?hl=pt">
+        <i class="fa-brands fa-instagram text-sm"></i>
+    </a>
+<a class="w-10 h-10 rounded-full glass-card flex items-center justify-center hover:bg-sky-blue hover:text-white transition-all" href="#">
+        <i class="fa-brands fa-linkedin-in text-sm"></i>
+    </a>
+    <a class="w-10 h-10 rounded-full glass-card flex items-center justify-center hover:bg-sky-blue hover:text-white transition-all" href="#">
+        <i class="fa-brands fa-github text-sm"></i>
+    </a>
+</div>
+</div>
+</div>
+<div class="border-t border-white/5 pt-10 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-slate-500 text-sm">
+                © 2026 LandMaker. Todos os direitos reservados.
+            </p>
+<div class="flex gap-8 text-sm text-slate-500">
+<a class="hover:text-white transition-colors" href="#">Privacidade</a>
+<a class="hover:text-white transition-colors" href="#">Termos</a>
+</div>
+</div>
+</div>
+</footer>
+<script>
+    const revealCallback = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    };
+
+    const revealObserver = new IntersectionObserver(revealCallback, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    document.querySelectorAll('.reveal').forEach(el => {
+        revealObserver.observe(el);
+    });
+
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const heroImg = document.querySelector('.animate-hero-img img');
+        if (heroImg) {
+            heroImg.style.transform = `translateY(${scrolled * 0.1}px)`;
+        }
+    });
+
+    document.querySelectorAll('.grid .reveal').forEach((el, index) => {
+        if (!el.classList.contains('delay-1') && !el.classList.contains('delay-2') && !el.classList.contains('delay-3')) {
+            const gridItemIndex = Array.from(el.parentElement.children).indexOf(el);
+             if (gridItemIndex > 0) {
+                el.style.transitionDelay = `${gridItemIndex * 0.15}s`;
+             }
+        }
+    });
+</script>
+</body></html>
